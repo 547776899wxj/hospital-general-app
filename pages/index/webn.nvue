@@ -1,0 +1,95 @@
+<template>
+	<view style="height: 100%;" >
+		<!-- <view class="uni-form-item form-item-bottom" >
+			<button class="popup-btn" @click="navTo">返回首页</button>
+		</view> -->
+		<!-- <web-view   class="web-view" :style="windowHeight"  src="https://www.baidu.com/?tn=48021271_22_hao_pg" @message="handleMessage" ></web-view> -->
+		<web-view class="web-view" :style="windowHeight" :src="url" @message="handleMessage" @onPostMessage="handleMessage" ></web-view>
+	</view>
+</template>
+
+<script>
+	// #ifdef APP-PLUS
+		var FvvUniTTS = uni.requireNativePlugin('Fvv-UniTTS');
+	// #endif
+	export default {
+		data() {
+			return {
+				url:'',
+				windowHeight:{
+					height:'1080px'
+				},
+			}
+		},
+		onLoad() {
+			this.url = uni.getStorageSync('ip')+'/#/pages/'+uni.getStorageSync('path');
+			console.log('路径'+this.url);
+			this.windowHeight.height = uni.getStorageSync('height')+'px';
+		},
+		methods: {
+			test(){
+				console.log('测试');
+				setTimeout(()=>{
+					var currentWebview = this.$mp.page.$getAppWebview() //获取当前页面的webview对象
+					var wv = currentWebview.children()[0]
+					wv.reload();
+					this.test();
+				},3000)
+			},
+			navTo(){
+				uni.navigateTo({
+					url: 'index?webView=true',
+				});
+			},
+			handleMessage(res) {
+				// 获取网页的参数
+				let data = res.detail.data[0];
+				console.log(data);
+				if(data.status){
+					this.zIndex = 0;
+				}
+				if(data.reload){
+					// #ifdef APP-PLUS
+						var currentWebview = this.$mp.page.$getAppWebview() //获取当前页面的webview对象
+						var wv = currentWebview.children()[0]
+						wv.reload();
+					// #endif
+					return
+				}
+				// #ifdef APP-PLUS
+					if(data.text){
+						FvvUniTTS.init((callback) => {
+							FvvUniTTS.speak({
+								text:data.text
+							});
+						});
+					}
+				// #endif
+			},
+		}
+	}
+</script>
+
+<style>
+	/* page{
+		height: 100%;
+	} */
+	.web-view{
+		width: 750rpx;
+		height: 100%;
+		position: relative;
+		z-index:100;
+	}
+	.form-item-bottom{
+		position: absolute;
+		top: 38%;
+		right: 38%;
+		z-index:0;
+	}
+	.popup-btn{
+		background-color: #007AFF;
+		color: #fff;
+		font-size: 100px;
+		
+	}
+</style>
