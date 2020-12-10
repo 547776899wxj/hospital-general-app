@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="popup">
 			<view class="popup-header">
-				设置{{test}}
+				设置
 			</view>
 			<view>
 				<form >
