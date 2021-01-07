@@ -1,9 +1,6 @@
 <template>
 	<view style="height: 100%;" >
-		<!-- <view class="uni-form-item form-item-bottom" >
-			<button class="popup-btn" @click="navTo">返回首页</button>
-		</view> -->
-		<!-- <web-view   class="web-view" :style="windowHeight"  src="https://www.baidu.com/?tn=48021271_22_hao_pg" @message="handleMessage" ></web-view> -->
+		<!-- <button class="popup-btn" @click="test">测试</button> -->
 		<web-view class="web-view" :style="windowHeight" :src="url" @message="handleMessage" @onPostMessage="handleMessage" ></web-view>
 	</view>
 </template>
@@ -19,6 +16,7 @@
 				windowHeight:{
 					height:'1080px'
 				},
+				isShowBack:true,
 			}
 		},
 		onLoad() {
@@ -28,12 +26,13 @@
 		},
 		methods: {
 			test(){
-				console.log('测试');
+				
 				setTimeout(()=>{
-					var currentWebview = this.$mp.page.$getAppWebview() //获取当前页面的webview对象
-					var wv = currentWebview.children()[0]
-					wv.reload();
-					this.test();
+					var currentWebview = this.$scope.$getAppWebview() //获取当前页面的webview对象
+					setTimeout(function() {
+						console.log(currentWebview);
+						currentWebview.reload();
+					}, 1000); //如果是页面初始化调用时，需要延时一下
 				},3000)
 			},
 			navTo(){
@@ -45,14 +44,14 @@
 				// 获取网页的参数
 				let data = res.detail.data[0];
 				console.log(data);
-				if(data.status){
-					this.zIndex = 0;
+				if(data.successful){
+					this.isShowBack = false;
 				}
 				if(data.reload){
 					// #ifdef APP-PLUS
-						var currentWebview = this.$mp.page.$getAppWebview() //获取当前页面的webview对象
-						var wv = currentWebview.children()[0]
-						wv.reload();
+						console.log('刷新');
+						var currentWebview = this.$scope.$getAppWebview() //获取当前页面的webview对象
+						currentWebview.reload();
 					// #endif
 					return
 				}
@@ -79,17 +78,5 @@
 		height: 100%;
 		position: relative;
 		z-index:100;
-	}
-	.form-item-bottom{
-		position: absolute;
-		top: 38%;
-		right: 38%;
-		z-index:0;
-	}
-	.popup-btn{
-		background-color: #007AFF;
-		color: #fff;
-		font-size: 100px;
-		
 	}
 </style>

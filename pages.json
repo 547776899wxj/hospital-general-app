@@ -26,6 +26,13 @@
 					"titleNView": false //禁用原生导航栏
 				}
 			}
+		},
+		{
+		    "path" : "pages/index/test",
+		    "style" : {
+				"navigationBarTitleText": "测试页右击返回"
+				
+			}
 		}
 		
     ],

@@ -1,8 +1,8 @@
 <template>
 	<view >
-		<view class="uni-form-item form-item-bottom" :style="zIndex">
+		<!-- <view class="uni-form-item form-item-bottom" :style="zIndex">
 			<button class="popup-btn" @click="navTo">路径错误点击返回</button>
-		</view>
+		</view> -->
 		<!-- <web-view class="content" src="https://www.baidu.com/?tn=48021271_22_hao_pg" @message="handleMessage" ></web-view> -->
 		<web-view :src="url" @message="handleMessage" ></web-view>
 	</view>

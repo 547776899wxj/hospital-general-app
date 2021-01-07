@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		
 		<view class="popup">
 			<view class="popup-header">
 				设置
@@ -18,14 +19,20 @@
 						<view class="popup-title" >高度：</view>
 						<input class="uni-input" name="height"  v-model="height" placeholder="如:(1080)" />
 					</view>
-					<view class="uni-form-item form-item-bottom">
+					<!-- <view class="uni-form-item " >
+						<view class="popup-title" >刷新时间：</view>
+						<input class="uni-input" name="height"  v-model="height" placeholder="如:()" />
+					</view> -->
+					<view class="uni-form-item ">
 						<button class="popup-btn"   @click="clear" >清除</button>
 						<button class="popup-btn"  @click="formSubmit" >确定</button>
+					</view>
+					<view class="uni-form-item form-item-bottom">
+						<button class="popup-btn"  style="width: 100%;" @click="navTo()" >ip测试页</button>
 					</view>
 				</form>
 			</view>
 		</view>
-		
 	</view>
 </template>
 
@@ -37,6 +44,7 @@
 				path:'',
 				height:'1080',
 				test:'',
+				showWebView:false,
 			}
 		},
 		onLoad(e) {
@@ -59,6 +67,9 @@
 			},
 			//确定
 			formSubmit(e) {
+				uni.setStorageSync('ip',this.ip);
+				uni.setStorageSync('path',this.path);
+				uni.setStorageSync('height',this.height);
 				if(this.ip=='' || this.path==''){
 					uni.showToast({
 						title: 'ip或路径不能为空',
@@ -66,18 +77,26 @@
 					});
 					return
 				}
-				uni.setStorageSync('ip',this.ip);
-				uni.setStorageSync('path',this.path);
-				uni.setStorageSync('height',this.height);
+				
 				uni.redirectTo({
 					url: 'webn',
 				})
             },
 			navTo(url){
-				console.log(url);
-				uni.redirectTo({
-					url: url,
-				});
+				uni.setStorageSync('ip',this.ip);
+				uni.setStorageSync('path',this.path);
+				uni.setStorageSync('height',this.height);
+				if(this.ip=='' || this.path==''){
+					uni.showToast({
+						title: 'ip或路径不能为空',
+						icon:'none'
+					});
+					return
+				}
+				
+				uni.navigateTo({
+					url:'./test',
+				})
 			}
 		}
 	}
@@ -126,12 +145,12 @@
 	.uni-form-item {
 		display: flex;
 		align-items: center;
-		padding: 40rpx 40rpx 0 40rpx;
+		padding-top: 20px;
 		justify-content: center;
 	}
 	.popup-title {
 		font-size: 30rpx;
-		width: 90rpx;
+		width: 56px;
 		text-align: right;
 	}
 	.uni-input {
