@@ -1,0 +1,56 @@
+<template>
+	<view style="height: 100%; margin-top: 50px;" >
+		<view class="uni-form-item form-item-bottom" >
+			<view><text class="text" style="color: #DD524D;">当前为测试页</text></view>
+			<text style="font-size: 20px;">白屏请点击返回首页按钮,确认ip路径是否正确</text>
+			<button class="popup-btn" @click="navTo">返回首页</button>
+		</view>
+		<web-view class="web-view" :style="windowHeight" :src="url" ></web-view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				url:'',
+				windowHeight:{
+					height:'1080px'
+				},
+				isShowBack:true,
+			}
+		},
+		onLoad() {
+			this.url = uni.getStorageSync('ip')+'/#/pages/'+uni.getStorageSync('path');
+			console.log(this.url);
+			this.windowHeight.height = uni.getStorageSync('height')+'px';
+		},
+		methods: {
+			navTo(){
+				console.log('是打发斯蒂芬');
+				uni.navigateTo({
+					url: 'index?webView=true',
+				});
+			},
+		}
+	}
+</script>
+
+<style>
+	/* page{
+		height: 100%;
+	} */
+	.web-view{
+		width: 750rpx;
+		height: 100%;
+		position: relative;
+	}
+	.popup-btn{
+		background-color: #007AFF;
+		color: #fff !important;
+		font-size: 30px;
+	}
+	.text{
+		font-size: 30px;
+	}
+</style>
