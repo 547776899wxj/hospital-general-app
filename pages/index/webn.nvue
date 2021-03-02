@@ -25,8 +25,7 @@
 			this.windowHeight.height = uni.getStorageSync('height')+'px';
 		},
 		methods: {
-			tes	t(){
-				
+			test(){
 				setTimeout(()=>{
 					var currentWebview = this.$scope.$getAppWebview() //获取当前页面的webview对象
 					setTimeout(function() {

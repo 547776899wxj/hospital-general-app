@@ -150,7 +150,7 @@
 	}
 	.popup-title {
 		font-size: 30rpx;
-		width: 56px;
+		width: 60px;
 		text-align: right;
 	}
 	.uni-input {
