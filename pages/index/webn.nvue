@@ -22,7 +22,7 @@
 		onLoad() {
 			this.url = uni.getStorageSync('ip')+'/#/pages/'+uni.getStorageSync('path');
 			console.log('路径'+this.url);
-			this.windowHeight.height = uni.getStorageSync('height')+'px';
+			this.windowHeight.height = uni.getStorageSync('height')+'px' || '1080px';
 		},
 		methods: {
 			test(){

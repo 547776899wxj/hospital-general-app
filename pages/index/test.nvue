@@ -5,6 +5,11 @@
 			<text style="font-size: 20px;">白屏请点击返回首页按钮,确认ip路径是否正确</text>
 			<button class="popup-btn" @click="navTo">返回首页</button>
 		</view>
+		<view class="uni-form-item form-item-bottom" >
+			<button class="popup-btn" @click="url='https://www.baidu.com/'">百度</button>
+			<input class="uni-input" name="urltest" v-model="urltest"/>
+			<button class="popup-btn" @click="url=urltest">测试URL</button>
+		</view>
 		<web-view class="web-view" :style="windowHeight" :src="url" ></web-view>
 	</view>
 </template>
@@ -18,6 +23,7 @@
 					height:'1080px'
 				},
 				isShowBack:true,
+				urltest:'',
 			}
 		},
 		onLoad() {
@@ -52,5 +58,10 @@
 	}
 	.text{
 		font-size: 30px;
+	}
+	.uni-input {
+		font-size: 25rpx;
+		padding: 20rpx 30rpx;
+		width: 750rpx;
 	}
 </style>
