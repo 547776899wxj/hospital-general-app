@@ -1,7 +1,7 @@
 <template>
 	<view style="height: 100%;" >
-		<!-- <button class="popup-btn" @click="test">测试</button> -->
-		<web-view class="web-view" :style="windowHeight" :src="url" @message="handleMessage" @onPostMessage="handleMessage" ></web-view>
+		<!-- <button type="default" style="height: 100px;" @click="test()">刷新{{testnumber}}</button> -->
+		<web-view class="web-view"  :style="windowHeight"  :src="url" @message="handleMessage" @onPostMessage="handleMessage" ></web-view>
 	</view>
 </template>
 
@@ -17,22 +17,19 @@
 					height:'1080px'
 				},
 				isShowBack:true,
+				currentWebview:null,
+				testnumber:0,
 			}
 		},
 		onLoad() {
-			this.url = uni.getStorageSync('ip')+'/#/pages/'+uni.getStorageSync('path');
+			this.url = uni.getStorageSync('ip')+'?t='+Date.parse(new Date())+'/#/pages/'+uni.getStorageSync('path');
 			console.log('路径'+this.url);
 			this.windowHeight.height = uni.getStorageSync('height')+'px' || '1080px';
 		},
 		methods: {
 			test(){
-				setTimeout(()=>{
-					var currentWebview = this.$scope.$getAppWebview() //获取当前页面的webview对象
-					setTimeout(function() {
-						console.log(currentWebview);
-						currentWebview.reload();
-					}, 1000); //如果是页面初始化调用时，需要延时一下
-				},3000)
+				this.currentWebview = this.$scope.$getAppWebview()
+				this.currentWebview.reload();
 			},
 			navTo(){
 				uni.navigateTo({
@@ -49,8 +46,8 @@
 				if(data.reload){
 					// #ifdef APP-PLUS
 						console.log('刷新');
-						var currentWebview = this.$scope.$getAppWebview() //获取当前页面的webview对象
-						currentWebview.reload();
+						this.currentWebview = this.$scope.$getAppWebview()
+						this.currentWebview.reload();
 					// #endif
 					return
 				}
@@ -74,8 +71,8 @@
 		height: 100%;
 	} */
 	.web-view{
-		width: 750rpx;
-		height: 100%;
+		/* width: 750rpx; */
+		flex: 1;
 		position: relative;
 		z-index:100;
 	}

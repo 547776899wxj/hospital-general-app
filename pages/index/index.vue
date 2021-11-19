@@ -28,7 +28,7 @@
 						<button class="popup-btn"  @click="formSubmit" >确定</button>
 					</view>
 					<view class="uni-form-item form-item-bottom">
-						<button class="popup-btn"  style="width: 100%;" @click="navTo()" >ip测试页</button>
+						<button class="popup-btn"  style="width: 100%;" @click="navTo('./test')" >ip测试页</button>
 					</view>
 				</form>
 			</view>
@@ -53,7 +53,7 @@
 			this.height = uni.getStorageSync('height') || '';
 			let webView = e.webView||false;
 			if(this.ip && this.path && !webView){
-				uni.navigateTo({
+				uni.redirectTo({
 					url: 'webn',
 				});
 			}
@@ -95,7 +95,7 @@
 				}
 				
 				uni.navigateTo({
-					url:'./test',
+					url:url,
 				})
 			}
 		}
